@@ -1,13 +1,16 @@
+import sys
+
 from pptx import Presentation
 from pyshorteners import Shortener
 
 
-def shorten_ppt_urls(file_name: str) -> None:
+def shorten_ppt_urls(file_name: str, output_file_name: str) -> None:
     """
     This function shortens all URLs in a PowerPoint presentation using the TinyURL service.
 
     Args:
     file_name (str): The name of the PowerPoint file to be modified.
+    output_file_name (str): The name of the output PowerPoint file where the changes will be saved.
 
     Returns:
     None
@@ -40,10 +43,17 @@ def shorten_ppt_urls(file_name: str) -> None:
                     except:
                         continue
 
-    # Save the changes to the original PowerPoint file
+    # Save the changes to a new PowerPoint file
     prs.save(file_name)
 
 
-# Use the function
-FILE_NAME = 'PYPPT.pptx'
-shorten_ppt_urls(FILE_NAME)
+if __name__ == "__main__":
+    if len(sys.argv) == 3:
+        ppt_filename = sys.argv[1]
+        output_ppt_filename = sys.argv[2]
+    else:
+        ppt_filename = input("Please provide the file name: ")
+        output_ppt_filename = input("Please provide the output file name: ")
+
+    # Use the function
+    shorten_ppt_urls(ppt_filename)
